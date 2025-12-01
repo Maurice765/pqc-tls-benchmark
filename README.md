@@ -1,4 +1,12 @@
-How to Run
+## Installation
+
+1.  **Run the setup script**:
+    ```bash
+    ./setup.sh
+    ```
+    This will create a virtual environment and install the required packages (`cryptography`, `kyber-py`).
+
+## How to Run
 Activate the environment (if not already active):
 
 source .venv/bin/activate
