@@ -1,12 +1,13 @@
 # Theoretische Grundlagen & Quellen (PQC TLS Benchmark)
 
 ## 1. Elliptic Curve Cryptography
-* **Cloudflare Blog:** [A Relatively Easy-To-Understand Guide to Elliptic Curve Cryptography](https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/) (Hervorragender Einstieg in ECC)
-* **Standard:** [RFC 7748](https://tools.ietf.org/html/rfc7748) – Elliptic Curves for Security (X25519)
+* **Cloudflare Blog:** [A Relatively Easy-To-Understand Guide to Elliptic Curve Cryptography](https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/) (Einstieg in ECC, wird noch in VL behandelt)
+* [Funny Measurements](https://eprint.iacr.org/2013/635.pdf)
 
-## 2. Quantencomputer
-* **Shors Algorithmus:** [Shors Algorithmus](https://www.spinquanta.com/news-detail/shors-algorithm) 
-* **NIST PQC:** [Post-Quantum Cryptography FAQ](https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs) (Offizielle Sicht der Standardisierungs-Behörde)
+## 2. Quantencomputer & Die Bedrohung
+* **Shor, I'll do it (Blog):** [Scott Aaronson: Shor's algorithm for everyone](https://www.scottaaronson.com/blog/?p=208)
+* **Shors Algorithmus (Visuell):** [MinutePhysics: How Shor's Algorithm- Factors 15](https://www.youtube.com/watch?v=lvTqbM5Dq4Q)
+* **Shor's Algorithm (Technisch):** [Qiskit Textbook: Shor's Algorithm](https://learn.qiskit.org/course/ch-algorithms/shors-algorithm)
 
 ## 3. Gitterbasierte Kryptographie 
 * **Learning with Errors (LWE):** [Learning with Errors](https://www.youtube.com/watch?v=K026C5YaB3A) (2 Videos davor auch super)
