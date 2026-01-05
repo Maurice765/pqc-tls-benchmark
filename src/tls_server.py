@@ -1,9 +1,15 @@
 import socket
 import ssl
+import os
 
 def run_server():
+    # Get the project root directory (parent of src/)
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cert_file = os.path.join(project_root, "certs", "cert.pem")
+    key_file = os.path.join(project_root, "certs", "key.pem")
+    
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    context.load_cert_chain(certfile="cert.pem", keyfile="key.pem")
+    context.load_cert_chain(certfile=cert_file, keyfile=key_file)
     # Force TLS 1.3 and ECDHE if possible (Python 3.7+ defaults to TLS 1.3 support)
     context.minimum_version = ssl.TLSVersion.TLSv1_3
     
