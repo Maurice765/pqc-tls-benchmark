@@ -1,0 +1,1 @@
+- AWS bietet free quantum computing an (1h pro Monat) und hat auch ein hybrid TLS encryption verfahren auf github
