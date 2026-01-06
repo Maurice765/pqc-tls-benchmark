@@ -118,9 +118,91 @@ $$
 - Bob muss eine zufällige Menge an Gleichungen aus dem Public Key auswählen und darf nicht nur eine Gleichung nehmen, da Angreifer dann wissen welche Gleichung verwendet wurde
 - Alice kann die Nachricht falsch entschlüsseln, wenn Bob zu viele Gleichungen addiert und die Summe der Fehler größer als (N/4) wird
 
+## Formal Definitons
+
+### Mathematische Definition von LWE
+
+**Definition:** Learning With Error problem: $\text{LWE}(m, n, q, B)$
+
+Sei $s \in_R \mathbb{Z}_q^n$ (geheim, zufällig gewählt) und $e \in_R [-B, B]^m$ (Fehler, zufällig aus kleinem Intervall), wobei $B \ll q/2$.
+
+Gegeben $A \in_R \mathbb{Z}_q^{m \times n}$ (öffentliche Matrix) und
+$$ b = As + e \pmod q \in \mathbb{Z}_q^m $$
+Finde $s$.
+
+
+### Decisional LWE und ss-DLWE
+
+Neben dem Finden von $s$ (Search-LWE) gibt es das Entscheidungsproblem:
+
+1.  **Decisional LWE (DLWE):** Unterscheide Paare $(a_i, b_i)$, die wie oben erzeugt wurden ("echt"), von Paaren, die komplett zufällig uniform aus $\mathbb{Z}_q^n \times \mathbb{Z}_q$ gezogen wurden ("Müll").
+    *   *Warum wichtig?* Wenn ein Angreifer verschlüsselte Nachrichten nicht von Zufallszahlen unterscheiden kann, ist die Verschlüsselung sicher (IND-CPA Sicherheit). Menezes zeigt, dass dies so schwer ist wie Search-LWE.
+
+2.  **ss-DLWE (Small Secret DLWE):**
+    *   Beim normalen LWE ist das Geheimnis $s$ zufällig aus dem ganzen Raum $\mathbb{Z}_q^n$.
+    *   Beim **ss-DLWE** werden die Komponenten von $s$ ebenfalls aus der "kleinen" Fehlerverteilung $\chi$ gezogen (genau wie die Fehler $e$).
+    *   *Kyber-Relevanz:* Kyber nutzt diese Variante! Das spart Platz und macht Berechnungen effizienter, ohne die Sicherheit zu verringern (unter bestimmten Bedingungen).
+
+## Lindner-Peikert PKE (Die Basis von Kyber)
+
+Kyber ist im Kern eine optimierte Version des Lindner-Peikert Verschlüsselungsverfahrens (2011), nur über Polynom-Ringen (Module) statt Matrizen.
+
+### Ablauf (Visualisierung)
+
+**1. KeyGen (Alice):**
+Alice wählt:
+- Eine öffentliche Matrix $A$ (jeder kennt sie, zufällig).
+- Ein geheimes $s$ (kleine Zahlen).
+- Einen geheimen Fehler $e$ (kleine Zahlen).
+Sie berechnet ihren Public Key $b$:
+$$ b = A \cdot s + e $$
+*(Vergleich: Das ist genau LWE! $b$ sieht für jeden ohne $s$ aus wie Zufall.)*
+
+**2. Encryption (Bob):**
+Bob will eine Nachricht $m$ (Bits) an Alice senden. Er wählt:
+- Zufällige kleine Vektoren $s', e', e''$ (sein "Ephemeral Key").
+Er berechnet zwei Dinge:
+1.  Einen "Hinweis" für Alice: $u = A^T \cdot s' + e'$
+2.  Die maskierte Nachricht: $v = b^T \cdot s' + e'' + \text{Encode}(m)$
+
+Bob sendet $(u, v)$ an Alice.
+
+**3. Decryption (Alice):**
+Alice empfängt $(u, v)$. Sie rechnet:
+$$ m' = v - s^T \cdot u $$
+
+Warum funktioniert das?
+$$ v - s^T u \approx (A s + e)^T s' - s^T (A^T s') \approx \text{Encode}(m) $$
+(Die Terme mit $A$ heben sich weg, übrig bleiben nur die kleinen Fehlerterme und die Nachricht. Da die Fehler klein sind, kann Alice runden und erhält $m$ zurück.)
+
+### Beispiel (für Folien)
+
+Statt riesiger Matrizen, hier mit kleinen Zahlen (Dimension 1, Modulo 100):
+
+*   **Public ($A$):** 42
+*   **Alice Secret ($s$):** 3 (klein)
+*   **Alice Error ($e$):** 1 (klein)
+*   **Alice Public Key ($b$):** $42 \cdot 3 + 1 = 127 \equiv 27 \bmod 100$
+
+Alice veröffentlicht: $(A=42, b=27)$.
+
+**Bob verschlüsselt Nachricht $m=1$ (codiert als 50):**
+*   Bob Secret ($s'$): 2 (klein)
+*   Bob Errors ($e', e''$): 1, -1
+*   $u = 42 \cdot 2 + 1 = 85$
+*   $v = 27 \cdot 2 + (-1) + 50 = 54 + 49 = 103 \equiv 3 \bmod 100$
+Bob sendet $(u=85, v=3)$.
+
+**Alice entschlüsselt:**
+*   $v - s \cdot u = 3 - (3 \cdot 85) = 3 - 255 = -252 \equiv 48 \bmod 100$
+*   Alice rundet $48$ zur nächsten "großen" Zahl (0 oder 50). $48 \approx 50$.
+*   Decodiert: Nachricht $m=1$.
+
 ## Impact on Project
 
-LWE ist die Grundlage für Gitter-Verschlüsselung, die von Kyber verwendet wird
+LWE ist die Grundlage für Gitter-Verschlüsselung, die von Kyber verwendet wird.
+*   Kyber nutzt **Module-LWE**: Das ist exakt das obige Lindner-Peikert Schema, aber $A, s, e$ sind keine Zahlen/Vektoren, sondern Polynome.
+*   Das Prinzip ($b = As+e$, $u=A^Ts'+e'$, etc.) bleibt mathematisch identisch.
 
 ## Resources and Quotes
 
