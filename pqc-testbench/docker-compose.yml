@@ -1,0 +1,24 @@
+services:
+  server:
+    build: .
+    container_name: pqc-server
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./certs:/certs
+    networks:
+      - pqc-net
+
+  client:
+    build: .
+    container_name: pqc-client
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./certs:/certs
+    networks:
+      - pqc-net
+
+networks:
+  pqc-net:
+    driver: bridge
