@@ -126,54 +126,125 @@ $$
 
 Sei $s \in_R \mathbb{Z}_q^n$ (geheim, zufällig gewählt) und $e \in_R [-B, B]^m$ (Fehler, zufällig aus kleinem Intervall), wobei $B \ll q/2$.
 
+- **$q$ (Modulus):** Alle Zahlen sind begrenzt auf den Bereich $[0, q-1]$ (bzw. $[-q/2, q/2]$)
+- **$n$ (Dimension des Geheimnisses):** Die Länge des geheimen Vektors $s$
+- **$m$ (Anzahl der Gleichungen):** Das entspricht der Anzahl der Zeilen in Matrix $A$.Wie viele Gleichungen bekommt der Angreifer?
+- **$B$ (Schranke):** Die maximale Größe des Fehlers
+    *   Der Fehler $e$ wird nicht aus dem ganzen Raum $q$ gewählt, sondern ist "klein": $e \in [-B, B]$.
+    *   $B \ll q$ (B muss sehr viel kleiner als q sein), sonst ist der Fehler nicht mehr zu unterscheiden.
+
 Gegeben $A \in_R \mathbb{Z}_q^{m \times n}$ (öffentliche Matrix) und
 $$ b = As + e \pmod q \in \mathbb{Z}_q^m $$
 Finde $s$.
 
+### Wahl des Parameters $B$
+
+1. $B=0$ (Kein Fehler): $As = b \pmod q$ kann einfach berechnet werden
+2. $B \approx q/2$ (Maximal großer Fehler): $B$ ist so groß, dass $b$ rein zufällig gewählt wird, wodurch $s$ nicht auffindbar ist
+3. $B < \sqrt{n}$ (Arora-Ge Attacke): Ist der Fehler da, aber zu klein kann er durch Algorithmen (z.b. Arora und Ge) in effizienter Zeit gelöst werden
+
+**Fazit:** Der Fehlerparameter $B$ muss sinnvoll gewählt werden, damit LWE sicher funktioniert
+
+### $m \gg n$ (Eindeutigkeit der Lösung)
+
+Die Bedingung $m \gg n$ stellt sicher, dass es **nur eine einzige** Lösung für $s$ gibt.
+
+1.  **Mapping:** Matrix $A$ bildet jedes mögliche Geheimnis $s$ auf einen Punkt $As$ im Ergebnisraum ab
+2.  **Fehler:** Durch den Fehlerterm $+e$ wird dieser exakte Punkt $As$ leicht "versetzt". Das Ergebnis $b$ landet irgendwo in einer kleinen Bereich um $As$ herum. Der Radius dieses Bereiches wird durch $B$ bestimmt
+3.  **Das Problem:** Wenn zwei verschiedene Geheimnisse $s_1$ und $s_2$ so nah beieinander abgebildet würden, dass sich ihre Fehler-Bereiche überlappen, dann wäre ein Punkt im Überlappungsbereich nicht eindeutig zuweisbar
+4.  **Die Lösung ($m \gg n$):**
+    *   Der Zielraum hat $m$ Dimensionen ($\mathbb{Z}_q^m$), der Startraum nur $n$ ($\mathbb{Z}_q^n$).
+    *   Da $m$ viel größer ist, ist der Zielraum exponentiell viel größer (und somit "leerer") als der Startraum
+    *   Die Punkte $As$ liegen dadurch extrem weit verstreut, wodurch die Wahrscheinlichkeit, dass sich zwei Fehler-Kugeln berühren gegen Null geht
+
+**Fazit:**
+Der Angreifer bekommt dadurch mehr Gleichungen ($m$) als Unbekannte ($n$). Theoretisch wäre ein lineares Gleichungssystem damit sofort lösbar (überbestimmt), jedoch ist durch den Fehler sichergestellt, dass es schwer bleibt
+
+![image](./images/m_bigger_n_visualization.png)
+(Quelle: Alfred Menezes THE MATHEMATICS
+OF LATTICE-BASED
+CRYPTOGRAPHY https://cryptography101.ca/wp-content/uploads/2025/01/Lattices-3-slides.pdf )
+
 
 ### Decisional LWE und ss-DLWE
 
-Neben dem Finden von $s$ (Search-LWE) gibt es das Entscheidungsproblem:
+1.  **Decisional LWE (DLWE):** Unterscheide Paare $(A, c)$, die wie oben erzeugt wurden ("echt"), von Paaren, die zufällig aus $\mathbb{Z}_q^n \times \mathbb{Z}_q$ gezogen wurden ("fake")
 
-1.  **Decisional LWE (DLWE):** Unterscheide Paare $(a_i, b_i)$, die wie oben erzeugt wurden ("echt"), von Paaren, die komplett zufällig uniform aus $\mathbb{Z}_q^n \times \mathbb{Z}_q$ gezogen wurden ("Müll").
-    *   *Warum wichtig?* Wenn ein Angreifer verschlüsselte Nachrichten nicht von Zufallszahlen unterscheiden kann, ist die Verschlüsselung sicher (IND-CPA Sicherheit). Menezes zeigt, dass dies so schwer ist wie Search-LWE.
+    **Definition:** $\text{DLWE}(m, n, q, B)$
+    Gegeben $(A, c)$. Das Problem ist zu entscheiden, ob $c$ "echt" oder "fake" ist:
+    1.  **Echt:** $c = b = As + e \pmod q$ (mit $s \in_R \mathbb{Z}_q^n, e \in_R [-B, B]^m$)
+    2.  **Fake:** $c = r \in_R \mathbb{Z}_q^m$ (komplett zufällig, unabhängig von $A$)
+    
+    Die Wahrscheinlichkeit richtig zu liegen liegt bei $1/2$. Wenn das Problem "schwer" ist, kann kein effizienter Algorithmus gefunden werden, der mit einer besseren Wahrscheinlichkeit vorhersagt als $1/2$. Mit einem geeignet Beweis kann gezeigt werden, dass $DLWE \leq LWE$ und $LWE \leq DLWE$  (LWE und DLWE sind gleich schwer)
 
-2.  **ss-DLWE (Small Secret DLWE):**
-    *   Beim normalen LWE ist das Geheimnis $s$ zufällig aus dem ganzen Raum $\mathbb{Z}_q^n$.
-    *   Beim **ss-DLWE** werden die Komponenten von $s$ ebenfalls aus der "kleinen" Fehlerverteilung $\chi$ gezogen (genau wie die Fehler $e$).
-    *   *Kyber-Relevanz:* Kyber nutzt diese Variante! Das spart Platz und macht Berechnungen effizienter, ohne die Sicherheit zu verringern (unter bestimmten Bedingungen).
+2.  **ss-LWE (Short-Secret LWE):**
+    **Definition:** $\text{ss-LWE}(m, n, q, B)$
 
-## Lindner-Peikert PKE (Die Basis von Kyber)
+    Der Unterschied zum normalen LWE liegt im Geheimnis $s$:
+    *   **LWE:** $s \in_R \mathbb{Z}_q^n$ (Zufällig aus dem gesamten Raum)
+    *   **ss-LWE:** $s \in_R [-B, B]^n$ (Zufällig aus dem *kleinen* Fehlerintervall)
 
-Kyber ist im Kern eine optimierte Version des Lindner-Peikert Verschlüsselungsverfahrens (2011), nur über Polynom-Ringen (Module) statt Matrizen.
+    Gegeben $A \in_R \mathbb{Z}_q^{m \times n}$ und $b = As + e \pmod q$.
+    Finde $s$.
 
-### Ablauf (Visualisierung)
+    Es kann wie bei DLWE auch hier bewiesen werden, dass $ss-LWE \leq LWE$ und $LWE \leq ss-LWE$ (LWE und ss-LWE sind äquivalent)
+    
+    **Relevanz:** Dadurch das $s$ kleiner ist, spart es Platz (= kleinere Keys) und Rechenzeit, ohne die Sicherheit zu verringern
 
-**1. KeyGen (Alice):**
-Alice wählt:
-- Eine öffentliche Matrix $A$ (jeder kennt sie, zufällig).
-- Ein geheimes $s$ (kleine Zahlen).
-- Einen geheimen Fehler $e$ (kleine Zahlen).
-Sie berechnet ihren Public Key $b$:
-$$ b = A \cdot s + e $$
-*(Vergleich: Das ist genau LWE! $b$ sieht für jeden ohne $s$ aus wie Zufall.)*
+3.  **ss-DLWE (Short-Secret Decisional LWE):**
+    *   Kombination von ss-LWE und DLWE
 
-**2. Encryption (Bob):**
-Bob will eine Nachricht $m$ (Bits) an Alice senden. Er wählt:
-- Zufällige kleine Vektoren $s', e', e''$ (sein "Ephemeral Key").
-Er berechnet zwei Dinge:
-1.  Einen "Hinweis" für Alice: $u = A^T \cdot s' + e'$
-2.  Die maskierte Nachricht: $v = b^T \cdot s' + e'' + \text{Encode}(m)$
+## Lindner-Peikert PKE
 
-Bob sendet $(u, v)$ an Alice.
+### Ablauf
 
-**3. Decryption (Alice):**
-Alice empfängt $(u, v)$. Sie rechnet:
-$$ m' = v - s^T \cdot u $$
+**1. Schlüssel Generierung - Alice:**
+- Wählt geheimes $s \in_R [-B, B]^n$ und $e \in_R [-B, B]^n$.
+- Wählt öffentliche Matrix $A \in_R \mathbb{Z}^{n \times n}_q$.
+- Berechnet  $b$: $ b = A \cdot s + e $
+- Alice's **public key** ist $(A,b)$, ihr **private key** ist $s$
 
-Warum funktioniert das?
-$$ v - s^T u \approx (A s + e)^T s' - s^T (A^T s') \approx \text{Encode}(m) $$
-(Die Terme mit $A$ heben sich weg, übrig bleiben nur die kleinen Fehlerterme und die Nachricht. Da die Fehler klein sind, kann Alice runden und erhält $m$ zurück.)
+Das berechnen irgendeiner Information von $s$ liegt im Schweregrad von $ss-DLWE(n,n,q,B)$
+
+**2. Verschlüsselung - Bob:**
+Bob will eine Nachricht $m \in \{0, 1\}$ an Alice senden:
+1. Kopie von Alice's public key $(A,b)$
+2. Wählt $r,z \in_R [-B,B]^n$ und $z' \in_R [-B,B]$
+3. Berechnet $c_1 = A^Tr + z$ und $c_2 = b^T r + z' + m \lceil q/2 \rceil$
+4. Schickt $c = (c_1, c_2)$
+
+**3. Entrschlüsselung - Alice:**
+Alice entschlüsselt $c = (c_1, c_2)$:
+$$ m = Round_q(c_2 - s^T \cdot c_1) $$
+
+**$Round_q$**: 
+
+Um zu entschlüsseln, wird der signed modulo Operator benutzt: Dieser verschiebt die Werte in den Bereich $[-\frac{q-1}{2}, \frac{q-1}{2}]$, danach wird eine Rundungsfunktion verwendet.
+
+1. **Signed Modulo ($x \text{ mods } q$):**
+$$
+x \text{ mods } q = \begin{cases} 
+x & \text{wenn } x \le (q-1)/2 \\
+x - q & \text{wenn } x > (q-1)/2
+\end{cases}
+$$
+(Das zentriert die Werte um 0 herum)
+
+2. **Round ($Round_q(x)$):**
+$$
+Round_q(x) = \begin{cases} 
+0 & \text{wenn } -q/4 < (x \text{ mods } q) < q/4 \\
+1 & \text{sonst}
+\end{cases}
+$$
+
+**Erklärung:**
+Wir schauen, ob der Wert näher an $0$ liegt (dann Bit 0) oder näher an $q/2$ bzw. $-q/2$ (dann Bit 1).
+
+![image](./images/singend_modulo.png)
+(Quelle: Alfred Menezes THE MATHEMATICS
+OF LATTICE-BASED
+CRYPTOGRAPHY https://cryptography101.ca/wp-content/uploads/2025/01/Lattices-3-slides.pdf )
 
 ### Beispiel (für Folien)
 
@@ -206,6 +277,7 @@ LWE ist die Grundlage für Gitter-Verschlüsselung, die von Kyber verwendet wird
 
 ## Resources and Quotes
 
-https://www.youtube.com/watch?v=K026C5YaB3A
-
-## Open Questions
+- https://www.youtube.com/watch?v=K026C5YaB3A
+- **[Alfred Menezes 2024]** Alfred Menezes. *THE MATHEMATICS
+OF LATTICE-BASED CRYPTOGRAPHY*. https://cryptography101.ca/wp-content/uploads/2025/01/Lattices-3-slides.pdf
+-   **[Lindner-Peikert 2010]** Richard Lindner and Chris Peikert. *Better Key Sizes (and Attacks) for LWE-Based Encryption*. Cryptology ePrint Archive, Paper 2010/613. [https://eprint.iacr.org/2010/613](https://eprint.iacr.org/2010/613)
