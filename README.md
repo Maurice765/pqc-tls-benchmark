@@ -1,40 +1,29 @@
+# PQC-TLS-Benchmark
+
+Eine Benchmark-Suite zur Bewertung von Post-Quantum Cryptography (PQC) in TLS-Kontexten. Vergleicht traditionelle elliptische Kurven-Kryptographie (ECC) mit PQC-Algorithmen wie Kyber, fokussiert auf Leistungsmetriken wie Latenz und Schlüsselgrößen.
+
 ## Installation
 
-1.  **Run the setup script**:
-    ```bash
-    ./setup.sh
-    ```
-    This will create a virtual environment and install the required packages (`cryptography`, `kyber-py`).
+1. Repository klonen:
+   ```bash
+   git clone https://github.com/yourusername/pqc-tls-benchmark.git
+   cd pqc-tls-benchmark
+   ```
 
-## How to Run
-Activate the environment (if not already active):
+2. Setup-Script ausführen:
+   ```bash
+   ./setup.sh
+   ```
+   Erstellt eine virtuelle Umgebung und installiert erforderliche Pakete (`cryptography`, `kyber-py`).
 
-source .venv/bin/activate
-Run the benchmark:
+## Verwendung
 
-python3 main.py
-Expected Output
-You will see a table comparing the two approaches.
+1. Virtuelle Umgebung aktivieren:
+   ```bash
+   source .venv/bin/activate
+   ```
 
-Sample Output:
-
-Running benchmarks with 100 iterations...
-Benchmarking Classic TLS (ECDHE)...
-Benchmarking PQC (Kyber768)...
-============================================================
-Metric                    | Classic (ECDHE) | PQC (Kyber768)
-------------------------------------------------------------
-Public Key Size (Bytes)   | 64              | 1184
-Ciphertext Size (Bytes)   | 0               | 1088
-------------------------------------------------------------
-Mean Latency (ms)         | 1.2521          | 0.8543
-Std Dev (ms)              | 0.1200          | 0.0500
-============================================================
-Latency Overhead (Kyber vs TLS Handshake): -31.77%
-Note: TLS latency includes full TCP+TLS handshake. Kyber latency is pure KEM crypto operations.
-NOTE
-
-Interpretation:
-
-Key Sizes: Kyber keys and ciphertexts are significantly larger (approx 1KB each) compared to ECC (64 bytes). This is the main trade-off.
-Latency: The computational latency of Kyber is very low (often faster than ECC). However, in a real network (not localhost), the transmission of the larger keys would add network latency. This prototype measures pure computation for Kyber vs full handshake for TLS.
+2. Benchmark ausführen:
+   ```bash
+   python3 benchmarks/benchmark.py
+   ```
