@@ -1,0 +1,6 @@
+FROM openquantumsafe/curl
+
+USER root
+# Try apk (Alpine) first. If it fails, user can correct or will retry. 
+# Installing iproute2 for 'tc'
+RUN apk update && apk add --no-cache iproute2

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  server:
+    image: openquantumsafe/nginx
+    container_name: oqs_server
+    ports:
+      - "4433:443"
+    volumes:
+      - ./nginx.conf:/opt/nginx/nginx-conf/nginx.conf
+    networks:
+      - oqs_net
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: oqs_client
+    command: tail -f /dev/null
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - oqs_net
+
+networks:
+  oqs_net:
+    driver: bridge
