@@ -82,7 +82,7 @@ Der LLL Algorithmus schafft es in polynomialer Zeit eine relativ kurze Basis fü
 Zum Beispiel: “Lattice attacks on digital signatures schemes”, Designs, Codes and Cryptography,
 by N. Howgrave-Graham and N. Smart (2000)
 
-Die "Qualität" der Basis verschlechtert sich, desto größer die Dimension $n$ des Gitters $L$. (Kyber768 --> $n=768$)
+Die "Qualität" der Basis verschlechtert sich, desto größer die Dimension $n$ des Gitters $L$. (Kyber768 --> $n=256$)
 
 ### Shortest Vector Problem (SVP)
 
@@ -90,7 +90,7 @@ Gegeben ist ein Gitter $L = L(B)$, finde einen Gittervektor der Länge $\lambda_
 
 - SVP ist NP-schwer, sowohl für normale Computer als auch Quantencomputer
 - Klassisch: Die besten bekannten Algorithmen brauchen etwa $2^{0.292n}$ 
-- Quantencomputer: dca. $2^{0.265n}$
+- Quantencomputer: ca. $2^{0.265n}$
 
 Oft müssen Oscar und Eve nicht den absolut kürzesten Vektor finden, denn es reicht oft ein hinreichend kleiner Vektor. Das nennt man das approximative SVP - $SVP_\gamma$:
 

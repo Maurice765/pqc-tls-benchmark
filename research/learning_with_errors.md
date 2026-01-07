@@ -116,7 +116,7 @@ $$
 ### Bedingungen
 
 - Bob muss eine zufällige Menge an Gleichungen aus dem Public Key auswählen und darf nicht nur eine Gleichung nehmen, da Angreifer dann wissen welche Gleichung verwendet wurde
-- Alice kann die Nachricht falsch entschlüsseln, wenn Bob zu viele Gleichungen addiert und die Summe der Fehler größer als (N/4) wird
+- Alice kann die Nachricht falsch entschlüsseln, wenn Bob zu viele Gleichungen addiert und die Summe der Fehler größer als (q/4) wird
 
 ## Formal Definitons
 
