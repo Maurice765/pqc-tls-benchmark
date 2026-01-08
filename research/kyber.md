@@ -180,14 +180,14 @@ In Kyber wird der Ciphertext $c = (c_1, c_2)$ komprimiert, um die Übertragungsg
 - $c_2$: $256 \times 4$ bits = 128 bytes
 - **Gesamt: 1088 bytes** (statt 1536 bytes unkomprimiert)
 
-**Warum funktioniert das?**
+**Funktionsweise:**
 Die Kompression fügt zusätzliches Rauschen hinzu. Solange dieses Rauschen zusammen mit dem LWE-Fehler klein genug bleibt (unter $q/4$), kann Alice die Nachricht korrekt entschlüsseln. Die Parameter $d_u$ und $d_v$ sind so gewählt, dass die Decryption Failure Rate vernachlässigbar klein ist ($< 2^{-139}$ für Kyber-768).
 
 ### NTT (Number Theoretic Transform)
 
-**Problem:** Polynom-Multiplikation in $R_q$ hat naiv Komplexität $O(n^2)$. Bei $n = 256$ ist das zu langsam.
+**Problem:** Polynom-Multiplikation in $R_q$ hat naiv Komplexität $O(n^2)$. Bei $n = 256$ ist das sehr langsam.
 
-**Lösung:** Die Number Theoretic Transform (NTT) ist das modulare Analogon zur Fast Fourier Transform (FFT). Sie reduziert die Komplexität auf $O(n \log n)$.
+**Lösung:** Die Number Theoretic Transform (NTT) ist die modulare Variante der Fast Fourier Transform (FFT). Sie reduziert die Komplexität auf $O(n \log n)$.
 
 **Idee:** 
 1. Transformiere beide Polynome in den "NTT-Raum" (Punktweise Darstellung)
@@ -199,20 +199,19 @@ Sei $\omega$ eine primitive $n$-te Einheitswurzel modulo $q$ (d.h. $\omega^n \eq
 
 $$\text{NTT}(f) = \hat{f}, \quad \text{wobei } \hat{f}_i = \sum_{j=0}^{n-1} f_j \cdot \omega^{ij} \pmod q$$
 
-**Warum $q = 3329$?**
-Kyber wählt $q = 3329$ gezielt, weil:
+Kyber wählt $q = 3329$, weil:
 1. $q \equiv 1 \pmod{256}$, daher existiert eine 256-te Einheitswurzel
 2. $q$ ist prim (einfache modulare Arithmetik)
 3. $q$ passt in 12 Bits
 
 **In Kyber:**
 - Schlüssel und Ciphertexts werden intern im NTT-Raum gespeichert
-- Multiplikationen sind dadurch extrem schnell
+- Multiplikationen sind dadurch schnell
 - Nur bei Ein-/Ausgabe wird zurücktransformiert
 
 ## Kyber-KEM
 
-### Was ist ein KEM?
+### Bedeutung von KEM:
 
 Ein **Key Encapsulation Mechanism (KEM)** ist ein asymmetrisches Verfahren zum sicheren Austausch eines symmetrischen Schlüssels. Im Gegensatz zu klassischem Public-Key-Encryption (PKE) verschlüsselt ein KEM keine beliebige Nachricht, sondern kapselt einen zufällig generierten Schlüssel.
 
@@ -228,7 +227,7 @@ Ein **Key Encapsulation Mechanism (KEM)** ist ein asymmetrisches Verfahren zum s
 |--------|------|-----|
 | Interaktion | Beide Parteien tragen bei | Eine Partei wählt das Geheimnis |
 | Berechnung | $K = g^{ab}$ (symmetrisch) | Encaps/Decaps (asymmetrisch) |
-| Ergebnis | Identisch: Shared Secret für symmetrische Verschlüsselung |
+| Ergebnis | Shared Secret für symmetrische Verschlüsselung | Shared Secret für symmetrische Verschlüsselung |
 
 ### Von PKE zu KEM: Fujisaki-Okamoto Transform
 
@@ -260,8 +259,8 @@ Ein **Key Encapsulation Mechanism (KEM)** ist ein asymmetrisches Verfahren zum s
    - Output $K' = H(z \| H(c))$ wobei $z$ ein geheimer Zufallswert aus $sk$ ist
 
 **Warum ist das sicher?**
-- Ein Angreifer kann keinen gültigen Ciphertext für eine Nachricht $m^*$ erzeugen, ohne $m^*$ zu kennen (weil $r$ von $m$ abhängt)
-- Manipulierte Ciphertexts führen zu einem unabhängigen Schlüssel $K'$, der dem Angreifer keine Information gibt (Implicit Rejection)
+- Ein Angreifer kann keinen gültigen Ciphertext für eine Nachricht $m'$ erzeugen, ohne $m'$ zu kennen (weil $r$ von $m$ abhängt)
+- Manipulierte Ciphertexts führen zu einem unabhängigen Schlüssel $K'$, der dem Angreifer keine Information gibt
 
 ### Kyber-KEM Parameter (ML-KEM-768)
 
