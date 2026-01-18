@@ -28,7 +28,7 @@ In 37.5% der Fällen tritt dies nicht auf (Beweis ausstehend) --> nach 10 geratt
 
 Echtes Problem: wie finden wir $h$? Mit Trial-and-Error auf einem normalen PC unrealistisch --> erst hier werden Quantencomputer relevant
 
-(jetzt wirds schwammig)
+(Die folgende Erklärung ist stark vereinfacht)
 In einen Quantencomputer (QC) können mehrere Inputs $x$ gemacht werden $(1,2,3,\dots,N)$ und es kann $g^x$ gleichzeitig berechnet werden (Verschränkung von 2 Registern) für jeden dieser Inputs $(g^1, g^2, g^3, \dots, g^N)$, Phänomen Superposition: $x \to g^x \to (x,g^x)$. Danach würde dieses Ergebnis ein weiteres mal genutzt um mit $> m \cdot N$ verglichen zu werden: $(x,g^x) \to > m \cdot N \to (x, +r)$ ($r$ für Rest).
 
 Messungen der Superpostítion würden jedoch kein gutes Ergebnis ergeben, weil nur ein zufälliger Wert gemessen und ausgegeben wird (Doppel-Spalt-Experiment bei Superposition). 
@@ -67,11 +67,13 @@ Mit $h$ können wir dann $g$ berechnen und finden wie bereits erklärt $p$ oder 
 
 ## Impact on Project
 
-k.A.
+Shor's Algorithmus zeigt, dass ECDH und RSA durch Quantencomputer gebrochen werden können. Dies motiviert den Einsatz von PQC-Verfahren wie Kyber.
 
 ## Resources and Quotes
 
-https://www.youtube.com/watch?v=lvTqbM5Dq4Q (Quellen aus Videobeschreibung durchzulesen)
+- https://www.youtube.com/watch?v=lvTqbM5Dq4Q (Visualisierung und einfache Erklärung)
+- “Shor, I’ll Do It.” Shtetl-Optimized, February 24, 2007. https://scottaaronson.blog/?p=208.
+- Shor, Peter W. “Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer.” SIAM Journal on Computing 26, no. 5 (1997): 1484–509. https://doi.org/10.1137/S0097539795293172.
 
 ## Open Questions
 

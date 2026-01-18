@@ -11,7 +11,7 @@ $$ L = \{ a_1 b_1 + ... + a_n b_n \mid a_i \in \mathbb{Z} \} \sube \mathbb{Z}^n 
 
 **Beispiel**
 
-Sei ($n=2$) unnd $B_1 = \{(1,0), (0,1)\}$
+Sei ($n=2$) und $B_1 = \{(1,0), (0,1)\}$
 
 Dann ist das Gitter $L_1 = L(B_1) = \{B_1 x : x \in \mathbb{Z}^2\}$, wobei
 $$ B_1 = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} $$
@@ -73,7 +73,7 @@ Das sukzessive Minima beschreibt eine aufsteigende Rangliste der kürzesten Vekt
 - $\lambda_n(L)$ ist die kürzeste Länge um den gesamten n-dimensionalen Raum des Gitters aufzuspannen
 - Wichtig: alle Vektoren sind linear unabhängig
 
-**Bedeutung**: In jeder Basis ist der längste Basisvektor mind. so lang wie $\lambda_n$ ($max(||v_i||) \geq \lambda_n(L)$). Es ist also nicht möglich eine Basis zu finden in der alle Vektoren kúrzer sind als $\lambda_i$
+**Bedeutung**: In jeder Basis ist der längste Basisvektor mind. so lang wie $\lambda_n$ ($max(||v_i||) \geq \lambda_n(L)$). Es ist also nicht möglich eine Basis zu finden in der alle Vektoren kürzer sind als $\lambda_i$
 
 ### Lenstra-Lenstra-Lovász (LLL) 
 
@@ -139,8 +139,10 @@ BDD kann auf das Shortest Vector Problem (SVP) reduziert werden (siehe Regev). D
 
 
 ## Resources
-- **[Alfred Menezes 2024]** Alfred Menezes. *THE MATHEMATICS
-OF LATTICE-BASED CRYPTOGRAPHY*. https://cryptography101.ca/wp-content/uploads/2025/01/Lattices-4-slides.pdf
+- Menezes, Alfred. THE MATHEMATICS OF LATTICE-BASED CRYPTOGRAPHY. n.d.
+- Regev, Oded. “On Lattices, Learning with Errors, Random Linear Codes, and Cryptography.” J. ACM 56, no. 6 (2009): 34:1-34:40. https://doi.org/10.1145/1568318.1568324.
+- Peikert, Chris. “A Decade of Lattice Cryptography.” Found. Trends Theor. Comput. Sci. 10, no. 4 (2016): 283–424. https://doi.org/10.1561/0400000074.
+
 
 ## Open Questions/ToDo
 

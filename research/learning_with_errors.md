@@ -277,7 +277,8 @@ LWE ist die Grundlage für Gitter-Verschlüsselung, die von Kyber verwendet wird
 
 ## Resources and Quotes
 
-- https://www.youtube.com/watch?v=K026C5YaB3A
-- **[Alfred Menezes 2024]** Alfred Menezes. *THE MATHEMATICS
-OF LATTICE-BASED CRYPTOGRAPHY*. https://cryptography101.ca/wp-content/uploads/2025/01/Lattices-3-slides.pdf
--   **[Lindner-Peikert 2010]** Richard Lindner and Chris Peikert. *Better Key Sizes (and Attacks) for LWE-Based Encryption*. Cryptology ePrint Archive, Paper 2010/613. [https://eprint.iacr.org/2010/613](https://eprint.iacr.org/2010/613)
+- https://www.youtube.com/watch?v=K026C5YaB3A (gute Einleitung)
+- Menezes, Alfred. THE MATHEMATICS OF LATTICE-BASED CRYPTOGRAPHY. n.d.
+- Lindner, Richard, and Chris Peikert. “Better Key Sizes (and Attacks) for LWE-Based Encryption.” In Topics in Cryptology – CT-RSA 2011, edited by Aggelos Kiayias. Springer, 2011. https://doi.org/10.1007/978-3-642-19074-2_21.
+- Regev, Oded. “On Lattices, Learning with Errors, Random Linear Codes, and Cryptography.” J. ACM 56, no. 6 (2009): 34:1-34:40. https://doi.org/10.1145/1568318.1568324.
+

@@ -114,6 +114,109 @@ Um $c = (c_1, c_2)$ zu entschlüsseln:
 
 1.  Berechne $m' = \text{Round}_q(c_2 - s^T c_1)$.
 
+### Kyber-PKE Example (Menezes)
+
+Ein Beispiel um den Ablauf zu veranschaulichen.
+
+**Parameter:**
+- $q = 137$, $n = 4$, $k = 2$
+- $\eta_1 = 2$, $\eta_2 = 2$
+- $R_q = \mathbb{Z}_{137}[x] / (x^4 + 1)$
+
+**1. Key Generation (Alice):**
+
+Alice wählt die öffentliche Matrix $A$, das Geheimnis $s$ und den Fehler $e$:
+
+$$
+A = \begin{bmatrix}
+21 + 57x + 78x^2 + 43x^3 & 126 + 122x + 19x^2 + 125x^3 \\
+111 + 9x + 63x^2 + 33x^3 & 105 + 61x + 71x^2 + 64x^3
+\end{bmatrix}
+$$
+
+$$
+s = \begin{bmatrix}
+1 + 2x - x^2 + 2x^3 \\
+-x + 2x^3
+\end{bmatrix}, \quad
+e = \begin{bmatrix}
+1 - x^2 + x^3 \\
+-x + x^2
+\end{bmatrix}
+$$
+
+Alice berechnet $t = As + e$:
+
+$$
+t = \begin{bmatrix}
+55 + 96x + 123x^2 + 7x^3 \\
+32 + 27x + 127x^2 + 100x^3
+\end{bmatrix}
+$$
+
+- **Encryption Key (Public):** $(A, t)$
+- **Decryption Key (Private):** $s$
+
+
+**2. Encryption (Bob):**
+
+Bob will die Nachricht $m = 0111$ verschlüsseln.
+
+*Bit-Encoding:* Die 4 Bits werden als Polynom codiert:
+$$m = 0111 \leftrightarrow 0 + 1 \cdot x + 1 \cdot x^2 + 1 \cdot x^3 = x + x^2 + x^3$$
+
+Bob wählt zufällige kleine Werte:
+
+$$
+r = \begin{bmatrix}
+-2 + 2x + x^2 - x^3 \\
+-1 + x + x^2
+\end{bmatrix}, \quad
+e_1 = \begin{bmatrix}
+1 - 2x^2 + x^3 \\
+-1 + 2x - 2x^2 + x^3
+\end{bmatrix}, \quad
+e_2 = 2 + 2x - x^2 + x^3
+$$
+
+Bob berechnet:
+
+$$
+u = A^T r + e_1 = \begin{bmatrix}
+56 + 32x + 77x^2 + 9x^3 \\
+45 + 21x + 2x^2 + 127x^3
+\end{bmatrix}
+$$
+
+$$
+v = t^T r + e_2 + \lfloor q/2 \rfloor \cdot m = t^T r + e_2 + 69m
+$$
+$$
+v = 3 + 10x + 8x^2 + 123x^3
+$$
+
+- **Ciphertext:** $c = (u, v)$
+
+
+**3. Decryption (Alice):**
+
+Alice berechnet mit ihrem Private Key $s$:
+
+$$
+v - s^T u = 4 + 60x + 79x^2 + 66x^3
+$$
+
+*Rundung der Koeffizienten:* Jeder Koeffizient wird gerundet – nahe $0$ ergibt Bit 0, nahe $q/2 = 68.5$ ergibt Bit 1 (siehe LWE Notes).
+
+| Koeffizient | Wert | Näher an | Bit |
+|-------------|------|----------|-----|
+| $x^0$ | 4 | 0 | 0 |
+| $x^1$ | 60 | 68.5 | 1 |
+| $x^2$ | 79 | 68.5 | 1 |
+| $x^3$ | 66 | 68.5 | 1 |
+
+**Ergebnis:** $m = 0111$ 
+
 ## Kyber - Optimizations
 
 Im Standard ML-KEM-768 die Parameter sind $q =3329, n = 256, k = 3, \eta_1 = 2, \eta_2 = 2$. Die Länge eines Integers beträgt damit $\lceil log_2 3329 \rceil$ = 12 bits.
