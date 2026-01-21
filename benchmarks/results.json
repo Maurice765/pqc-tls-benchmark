@@ -1,0 +1,938 @@
+[
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem512",
+    "handshake_time_s": 0.037955,
+    "transfer_time_s": 0.0281896,
+    "key_details": {
+      "pk": 800,
+      "ct": 768,
+      "label": "ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.03843,
+      0.035894,
+      0.041553,
+      0.039882,
+      0.034016
+    ],
+    "transfer_raw": [
+      0.034017,
+      0.027277999999999997,
+      0.032286999999999996,
+      0.023416999999999993,
+      0.023948999999999998
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "P-256",
+    "handshake_time_s": 0.035471600000000006,
+    "transfer_time_s": 0.026996399999999997,
+    "key_details": {
+      "pk": 65,
+      "ct": 65,
+      "label": "P-256"
+    },
+    "handshake_raw": [
+      0.038133,
+      0.03429,
+      0.038514,
+      0.034616,
+      0.031805
+    ],
+    "transfer_raw": [
+      0.026622,
+      0.024855999999999996,
+      0.028475,
+      0.024091,
+      0.030938000000000007
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "p256_mlkem512",
+    "handshake_time_s": 0.0491568,
+    "transfer_time_s": 0.025784399999999996,
+    "key_details": {
+      "pk": 865,
+      "ct": 833,
+      "label": "P-256 + ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.052714,
+      0.048324,
+      0.047476,
+      0.046269,
+      0.051001
+    ],
+    "transfer_raw": [
+      0.022630000000000004,
+      0.027761,
+      0.02305199999999999,
+      0.029369,
+      0.02611
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem768",
+    "handshake_time_s": 0.034250800000000005,
+    "transfer_time_s": 0.0232412,
+    "key_details": {
+      "pk": 1184,
+      "ct": 1088,
+      "label": "ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.033477,
+      0.033955,
+      0.036325,
+      0.034061,
+      0.033436
+    ],
+    "transfer_raw": [
+      0.018480999999999997,
+      0.026409000000000002,
+      0.022313,
+      0.024951,
+      0.024051999999999997
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "P-384",
+    "handshake_time_s": 0.035285,
+    "transfer_time_s": 0.0253054,
+    "key_details": {
+      "pk": 97,
+      "ct": 97,
+      "label": "P-384"
+    },
+    "handshake_raw": [
+      0.037287,
+      0.034266,
+      0.034655,
+      0.033449,
+      0.036768
+    ],
+    "transfer_raw": [
+      0.027428,
+      0.024875999999999995,
+      0.024135999999999998,
+      0.025525,
+      0.024562
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "p384_mlkem768",
+    "handshake_time_s": 0.049858599999999996,
+    "transfer_time_s": 0.025154799999999998,
+    "key_details": {
+      "pk": 1281,
+      "ct": 1185,
+      "label": "P-384 + ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.049988,
+      0.047295,
+      0.050001,
+      0.048755,
+      0.053254
+    ],
+    "transfer_raw": [
+      0.032373,
+      0.023020999999999993,
+      0.025928,
+      0.022412999999999995,
+      0.022038999999999996
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem1024",
+    "handshake_time_s": 0.033887,
+    "transfer_time_s": 0.025121400000000006,
+    "key_details": {
+      "pk": 1568,
+      "ct": 1568,
+      "label": "ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.031462,
+      0.034408,
+      0.03627,
+      0.032706,
+      0.034589
+    ],
+    "transfer_raw": [
+      0.024373000000000006,
+      0.019643,
+      0.027546,
+      0.02427,
+      0.029775000000000003
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "P-521",
+    "handshake_time_s": 0.037814,
+    "transfer_time_s": 0.026265,
+    "key_details": {
+      "pk": 133,
+      "ct": 133,
+      "label": "P-521"
+    },
+    "handshake_raw": [
+      0.036227,
+      0.038595,
+      0.036295,
+      0.040826,
+      0.037127
+    ],
+    "transfer_raw": [
+      0.023698999999999998,
+      0.029957000000000004,
+      0.026321999999999998,
+      0.028123999999999996,
+      0.023223
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 0,
+    "algorithm": "p521_mlkem1024",
+    "handshake_time_s": 0.053203999999999994,
+    "transfer_time_s": 0.0253116,
+    "key_details": {
+      "pk": 1701,
+      "ct": 1701,
+      "label": "P-521 + ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.050609,
+      0.052758,
+      0.054953,
+      0.054164,
+      0.053536
+    ],
+    "transfer_raw": [
+      0.028614999999999995,
+      0.021211,
+      0.025948000000000006,
+      0.022390000000000007,
+      0.028393999999999996
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem512",
+    "handshake_time_s": 0.0330976,
+    "transfer_time_s": 0.035019999999999996,
+    "key_details": {
+      "pk": 800,
+      "ct": 768,
+      "label": "ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.032897,
+      0.032357,
+      0.033315,
+      0.034341,
+      0.032578
+    ],
+    "transfer_raw": [
+      0.025458999999999996,
+      0.028918999999999993,
+      0.022753999999999996,
+      0.076658,
+      0.021310000000000003
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "P-256",
+    "handshake_time_s": 0.0724262,
+    "transfer_time_s": 0.1094174,
+    "key_details": {
+      "pk": 65,
+      "ct": 65,
+      "label": "P-256"
+    },
+    "handshake_raw": [
+      0.036188,
+      0.032961,
+      0.228861,
+      0.031398,
+      0.032723
+    ],
+    "transfer_raw": [
+      0.22760299999999997,
+      0.04177,
+      0.22683899999999999,
+      0.029127999999999994,
+      0.021747000000000002
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "p256_mlkem512",
+    "handshake_time_s": 0.046805200000000005,
+    "transfer_time_s": 0.109226,
+    "key_details": {
+      "pk": 865,
+      "ct": 833,
+      "label": "P-256 + ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.047775,
+      0.044605,
+      0.04628,
+      0.04791,
+      0.047456
+    ],
+    "transfer_raw": [
+      0.027365000000000084,
+      0.02941699999999997,
+      0.026891000000000005,
+      0.025825999999999995,
+      0.436631
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem768",
+    "handshake_time_s": 0.4325462,
+    "transfer_time_s": 0.026184999999999996,
+    "key_details": {
+      "pk": 1184,
+      "ct": 1088,
+      "label": "ML-KEM-768"
+    },
+    "handshake_raw": [
+      2.026983,
+      0.036341,
+      0.033804,
+      0.032223,
+      0.03338
+    ],
+    "transfer_raw": [
+      0.028864,
+      0.024182000000000002,
+      0.028424999999999992,
+      0.021213,
+      0.028241000000000002
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "P-384",
+    "handshake_time_s": 0.42770860000000005,
+    "transfer_time_s": 0.0364294,
+    "key_details": {
+      "pk": 97,
+      "ct": 97,
+      "label": "P-384"
+    },
+    "handshake_raw": [
+      0.036027,
+      1.015424,
+      1.018591,
+      0.033874,
+      0.034627
+    ],
+    "transfer_raw": [
+      0.025616,
+      0.029626,
+      0.028520999999999998,
+      0.07535700000000001,
+      0.023027000000000006
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "p384_mlkem768",
+    "handshake_time_s": 0.048942400000000004,
+    "transfer_time_s": 0.06818760000000004,
+    "key_details": {
+      "pk": 1281,
+      "ct": 1185,
+      "label": "P-384 + ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.048362,
+      0.048485,
+      0.048279,
+      0.051975,
+      0.047611
+    ],
+    "transfer_raw": [
+      0.0245,
+      0.025859000000000007,
+      0.031922000000000006,
+      0.23218400000000017,
+      0.026473000000000003
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem1024",
+    "handshake_time_s": 0.0354848,
+    "transfer_time_s": 0.025966200000000002,
+    "key_details": {
+      "pk": 1568,
+      "ct": 1568,
+      "label": "ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.03311,
+      0.040881,
+      0.03623,
+      0.031465,
+      0.035738
+    ],
+    "transfer_raw": [
+      0.023167,
+      0.032010000000000004,
+      0.022837999999999997,
+      0.027954,
+      0.023862
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "P-521",
+    "handshake_time_s": 0.041893200000000005,
+    "transfer_time_s": 0.026671399999999994,
+    "key_details": {
+      "pk": 133,
+      "ct": 133,
+      "label": "P-521"
+    },
+    "handshake_raw": [
+      0.042524,
+      0.042089,
+      0.047242,
+      0.040065,
+      0.037546
+    ],
+    "transfer_raw": [
+      0.024419999999999997,
+      0.031298999999999993,
+      0.025994999999999997,
+      0.025088,
+      0.026554999999999995
+    ]
+  },
+  {
+    "latency_ms": 0,
+    "packet_loss_percent": 5,
+    "algorithm": "p521_mlkem1024",
+    "handshake_time_s": 0.0571512,
+    "transfer_time_s": 0.027651,
+    "key_details": {
+      "pk": 1701,
+      "ct": 1701,
+      "label": "P-521 + ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.05509,
+      0.054864,
+      0.061414,
+      0.063538,
+      0.05085
+    ],
+    "transfer_raw": [
+      0.028288,
+      0.021564999999999994,
+      0.026325,
+      0.023611999999999994,
+      0.038465
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem512",
+    "handshake_time_s": 0.13198300000000002,
+    "transfer_time_s": 0.4915362,
+    "key_details": {
+      "pk": 800,
+      "ct": 768,
+      "label": "ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.132733,
+      0.129631,
+      0.134802,
+      0.130742,
+      0.132007
+    ],
+    "transfer_raw": [
+      0.49233400000000005,
+      0.491421,
+      0.49079999999999996,
+      0.49130000000000007,
+      0.491826
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "P-256",
+    "handshake_time_s": 0.130135,
+    "transfer_time_s": 0.4930734,
+    "key_details": {
+      "pk": 65,
+      "ct": 65,
+      "label": "P-256"
+    },
+    "handshake_raw": [
+      0.13122,
+      0.129089,
+      0.129507,
+      0.132628,
+      0.128231
+    ],
+    "transfer_raw": [
+      0.492027,
+      0.493151,
+      0.492281,
+      0.49454300000000007,
+      0.49336499999999994
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "p256_mlkem512",
+    "handshake_time_s": 0.143692,
+    "transfer_time_s": 0.491548,
+    "key_details": {
+      "pk": 865,
+      "ct": 833,
+      "label": "P-256 + ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.143438,
+      0.143062,
+      0.146115,
+      0.143541,
+      0.142304
+    ],
+    "transfer_raw": [
+      0.49184400000000006,
+      0.49061599999999994,
+      0.490422,
+      0.492189,
+      0.49266899999999997
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem768",
+    "handshake_time_s": 0.132603,
+    "transfer_time_s": 0.4919744,
+    "key_details": {
+      "pk": 1184,
+      "ct": 1088,
+      "label": "ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.130548,
+      0.1305,
+      0.135382,
+      0.129551,
+      0.137034
+    ],
+    "transfer_raw": [
+      0.4906870000000001,
+      0.49101300000000003,
+      0.491625,
+      0.49612399999999995,
+      0.49042299999999994
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "P-384",
+    "handshake_time_s": 0.1317394,
+    "transfer_time_s": 0.5008722000000001,
+    "key_details": {
+      "pk": 97,
+      "ct": 97,
+      "label": "P-384"
+    },
+    "handshake_raw": [
+      0.132235,
+      0.131527,
+      0.1307,
+      0.129694,
+      0.134541
+    ],
+    "transfer_raw": [
+      0.531735,
+      0.492715,
+      0.49196300000000004,
+      0.4951920000000001,
+      0.49275599999999997
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "p384_mlkem768",
+    "handshake_time_s": 0.1460064,
+    "transfer_time_s": 0.491926,
+    "key_details": {
+      "pk": 1281,
+      "ct": 1185,
+      "label": "P-384 + ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.14782,
+      0.146177,
+      0.145382,
+      0.145544,
+      0.145109
+    ],
+    "transfer_raw": [
+      0.49304099999999995,
+      0.4916689999999999,
+      0.491556,
+      0.49159400000000003,
+      0.49177000000000004
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "mlkem1024",
+    "handshake_time_s": 0.1303068,
+    "transfer_time_s": 0.49154200000000003,
+    "key_details": {
+      "pk": 1568,
+      "ct": 1568,
+      "label": "ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.129719,
+      0.130778,
+      0.13149,
+      0.128528,
+      0.131019
+    ],
+    "transfer_raw": [
+      0.49131699999999995,
+      0.491804,
+      0.49050599999999994,
+      0.49284600000000006,
+      0.4912369999999999
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "P-521",
+    "handshake_time_s": 0.1356132,
+    "transfer_time_s": 0.49196739999999994,
+    "key_details": {
+      "pk": 133,
+      "ct": 133,
+      "label": "P-521"
+    },
+    "handshake_raw": [
+      0.134428,
+      0.134971,
+      0.135735,
+      0.135033,
+      0.137899
+    ],
+    "transfer_raw": [
+      0.49287,
+      0.4914860000000001,
+      0.493004,
+      0.49118799999999996,
+      0.491289
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 0,
+    "algorithm": "p521_mlkem1024",
+    "handshake_time_s": 0.153277,
+    "transfer_time_s": 0.4910126,
+    "key_details": {
+      "pk": 1701,
+      "ct": 1701,
+      "label": "P-521 + ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.151193,
+      0.151545,
+      0.156772,
+      0.152674,
+      0.154201
+    ],
+    "transfer_raw": [
+      0.48874400000000007,
+      0.49173999999999995,
+      0.490777,
+      0.4927579999999999,
+      0.49104400000000004
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem512",
+    "handshake_time_s": 0.1305388,
+    "transfer_time_s": 0.4911212,
+    "key_details": {
+      "pk": 800,
+      "ct": 768,
+      "label": "ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.131024,
+      0.129367,
+      0.130716,
+      0.131972,
+      0.129615
+    ],
+    "transfer_raw": [
+      0.491117,
+      0.490652,
+      0.490584,
+      0.490186,
+      0.4930669999999999
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "P-256",
+    "handshake_time_s": 0.18521939999999998,
+    "transfer_time_s": 0.493112,
+    "key_details": {
+      "pk": 65,
+      "ct": 65,
+      "label": "P-256"
+    },
+    "handshake_raw": [
+      0.129069,
+      0.132524,
+      0.131744,
+      0.129968,
+      0.402792
+    ],
+    "transfer_raw": [
+      0.49348699999999995,
+      0.493996,
+      0.49189700000000003,
+      0.492024,
+      0.49415600000000004
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "p256_mlkem512",
+    "handshake_time_s": 0.1430232,
+    "transfer_time_s": 0.4911278,
+    "key_details": {
+      "pk": 865,
+      "ct": 833,
+      "label": "P-256 + ML-KEM-512"
+    },
+    "handshake_raw": [
+      0.14284,
+      0.14124,
+      0.145035,
+      0.142933,
+      0.143068
+    ],
+    "transfer_raw": [
+      0.49150000000000005,
+      0.49186300000000005,
+      0.49277800000000016,
+      0.48921099999999995,
+      0.49028700000000003
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem768",
+    "handshake_time_s": 0.1338988,
+    "transfer_time_s": 0.504559,
+    "key_details": {
+      "pk": 1184,
+      "ct": 1088,
+      "label": "ML-KEM-768"
+    },
+    "handshake_raw": [
+      0.130805,
+      0.13609,
+      0.136676,
+      0.132441,
+      0.133482
+    ],
+    "transfer_raw": [
+      0.492658,
+      0.49419599999999997,
+      0.507245,
+      0.489668,
+      0.539028
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "P-384",
+    "handshake_time_s": 0.1331352,
+    "transfer_time_s": 0.5031918,
+    "key_details": {
+      "pk": 97,
+      "ct": 97,
+      "label": "P-384"
+    },
+    "handshake_raw": [
+      0.131832,
+      0.141388,
+      0.130753,
+      0.131189,
+      0.130514
+    ],
+    "transfer_raw": [
+      0.49367799999999995,
+      0.49359699999999995,
+      0.491101,
+      0.546609,
+      0.490974
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "p384_mlkem768",
+    "handshake_time_s": 0.344647,
+    "transfer_time_s": 0.5591698,
+    "key_details": {
+      "pk": 1281,
+      "ct": 1185,
+      "label": "P-384 + ML-KEM-768"
+    },
+    "handshake_raw": [
+      1.139848,
+      0.144727,
+      0.145558,
+      0.147222,
+      0.14588
+    ],
+    "transfer_raw": [
+      0.499295,
+      0.49779300000000004,
+      0.816367,
+      0.49070100000000005,
+      0.491693
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "mlkem1024",
+    "handshake_time_s": 0.161584,
+    "transfer_time_s": 0.4918694,
+    "key_details": {
+      "pk": 1568,
+      "ct": 1568,
+      "label": "ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.286017,
+      0.130247,
+      0.130503,
+      0.129971,
+      0.131182
+    ],
+    "transfer_raw": [
+      0.49073999999999995,
+      0.491016,
+      0.489128,
+      0.49724,
+      0.49122299999999997
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "P-521",
+    "handshake_time_s": 0.1356962,
+    "transfer_time_s": 0.49274579999999996,
+    "key_details": {
+      "pk": 133,
+      "ct": 133,
+      "label": "P-521"
+    },
+    "handshake_raw": [
+      0.13704,
+      0.136472,
+      0.134536,
+      0.134732,
+      0.135701
+    ],
+    "transfer_raw": [
+      0.492267,
+      0.49289000000000005,
+      0.492657,
+      0.49288699999999996,
+      0.4930279999999999
+    ]
+  },
+  {
+    "latency_ms": 50,
+    "packet_loss_percent": 5,
+    "algorithm": "p521_mlkem1024",
+    "handshake_time_s": 0.180009,
+    "transfer_time_s": 0.49425360000000007,
+    "key_details": {
+      "pk": 1701,
+      "ct": 1701,
+      "label": "P-521 + ML-KEM-1024"
+    },
+    "handshake_raw": [
+      0.300194,
+      0.151175,
+      0.149538,
+      0.148651,
+      0.150487
+    ],
+    "transfer_raw": [
+      0.49124100000000004,
+      0.49109900000000006,
+      0.494574,
+      0.500429,
+      0.49392499999999995
+    ]
+  }
+]

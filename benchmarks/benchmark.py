@@ -28,9 +28,9 @@ ALGO_DETAILS = {
 }
 # Hybrid: p256_mlkem512, p384_mlkem768, p521_mlkem1024
 
-LATENCIES = [0, 50] # ms
-LOSS_RATES = [0,5] # percent
-ITERATIONS = 20
+LATENCIES = [0,50,100] # ms
+LOSS_RATES = [0,5,20] # percent
+ITERATIONS = 50
 
 def run_command(cmd, shell=True):
     # print(f"Debug: {cmd}")
