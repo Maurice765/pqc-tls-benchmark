@@ -329,7 +329,7 @@ Ein **Key Encapsulation Mechanism (KEM)** ist ein asymmetrisches Verfahren zum s
 | Aspekt | ECDH | KEM |
 |--------|------|-----|
 | Interaktion | Beide Parteien tragen bei | Eine Partei wählt das Geheimnis |
-| Berechnung | $K = g^{ab}$ (symmetrisch) | Encaps/Decaps (asymmetrisch) |
+| Berechnung | $K$ (symmetrisch) | Encaps/Decaps (asymmetrisch) |
 | Ergebnis | Shared Secret für symmetrische Verschlüsselung | Shared Secret für symmetrische Verschlüsselung |
 
 ### Von PKE zu KEM: Fujisaki-Okamoto Transform
