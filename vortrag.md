@@ -8,6 +8,7 @@
 - **Fragestellung**: Was ist jedoch der Trade-Off von Post-Quanten Kryptographie?
 
 Shor, Peter W. “Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer.” SIAM Journal on Computing 26, no. 5 (1997): 1484–509. https://doi.org/10.1137/S0097539795293172.
+
 ![image](./research/images/Peter_Shor_2017_Dirac_Medal_Award_Ceremony.png)
 
 [Peter Shor](https://en.wikipedia.org/wiki/Peter_Shor#/media/File:Peter_Shor_2017_Dirac_Medal_Award_Ceremony.png) in 2017
@@ -72,7 +73,7 @@ Als Standard für eine elliptische Kurve wird oft die von Dan Bernstein in 2005 
 
 ---
 
-# Post-Quanten-Sichere Kryptologie-Verfahren
+# Post-Quanten-Kryptographie
 
 Für Kyber benötigen wir folgende 2 Grundlagen: Gitter und LWE.
 
@@ -167,13 +168,13 @@ Die Sicherheit von LWE basiert darauf, dass das Lösen der Gleichung äquivalent
 
 ## Kyber-PKE
 
-**Parameter:** $q = 3329$, $n = 256$, $k \in \{2,3,4\}$
+**Parameter:** $q = 3329$, $n = 256$, $k \in \{2,3,4\}$, $\eta_1 = 2$, $\eta_2 = 2$
 
-**KeyGen:** $t = As + e$ → Public Key $(A, t)$, Private Key $s$
+**Key Generierung:** $b = As + e$ → Public Key $(A, t)$, Private Key $s$
 
-**Encrypt:** $u = A^T r + e_1$, $v = t^T r + e_2 + \lfloor q/2 \rfloor \cdot m$
+**Verschlüsselung:** $u = A^T r + e_1$, $v = b^T r + e_2 + \lfloor q/2 \rfloor \cdot m$
 
-**Decrypt:** $m = \text{Round}(v - s^T u)$
+**Entschlüsselung:** $m = \text{Round}(v - s^T u)$
 
 ### Beispiel
 
@@ -289,7 +290,7 @@ $$
 
 **Problem:** PKE ist nur gegen passive Angreifer sicher
 
-**Lösung:** Bei Decaps wird Ciphertext **neu berechnet** und verglichen (PKE --> KEM)
+**Lösung:** Bei Decaps wird Ciphertext **neu berechnet** und verglichen
 
 ### Ablauf
 
@@ -332,10 +333,3 @@ Es werden **2** Schlüsselaustausche gleichzeitig durchgeführt
 - Falls Quantencomputer kommen, schützt Kyber.
 
 ---
-
-# Zusammenfassung
-
-1. **ECDH** ist schnell und effizient, aber durch Quantencomputer brechbar (Shor)
-2. **Gitterbasierte Krypto** ist auch für Quantencomputer schwer (SVP bleibt NP-schwer)
-3. **LWE** fügt Rauschen hinzu → Gleichungssystem unlösbar und ist die Grundlage für die Schwierigkeit von SVP
-4. **Kyber/ML-KEM** nutzt Module-LWE mit Polynomen für effiziente, quantensichere Verschlüsselung
