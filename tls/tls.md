@@ -1,4 +1,6 @@
-# Einleitung
+# TLS 1.3 Handshake
+
+## Einleitung
 - 2018 in RFC 8446 finalisiert (IETF TLS Working Group)
 - Basiert auf TLS 1.2, entfernt Veraltete Verfahren (kein SHA-1, kein RSA-Key-Exchange ohne Forward Secrecy)
 - Einführung des 1-RTT Handshake (Verbindung steht nach nur einer Runde)
@@ -6,12 +8,12 @@
 
 
 
-# Vergleich Handshake TLS 1.2 vs TLS 1.3
+## Vergleich Handshake TLS 1.2 vs TLS 1.3
 
 ![image](/tls/images/tls-1.2-1.3-handshake.webp)
 
 
-# TLS 1.3 Handshake
+## TLS 1.3 Handshake
 
 1. Key Exchance:
 
