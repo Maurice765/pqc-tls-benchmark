@@ -28,8 +28,8 @@ ALGO_DETAILS = {
 }
 # Hybrid: p256_mlkem512, p384_mlkem768, p521_mlkem1024
 
-LATENCIES = [0, 50,100] # ms
-LOSS_RATES = [0,5,20] # percent
+LATENCIES = [0, 50] # ms
+LOSS_RATES = [0,5] # percent
 ITERATIONS = 20
 
 def run_command(cmd, shell=True):
@@ -152,8 +152,11 @@ def main():
     # Cleanup
     set_network(0, 0)
     
+    # Create results directory
+    os.makedirs("results", exist_ok=True)
+    
     # Save Results
-    json_path = "results.json"
+    json_path = "results/results.json"
     with open(json_path, 'w') as f:
         json.dump(final_results, f, indent=2)
     print(f"\nResults saved to {json_path}")
@@ -220,8 +223,8 @@ def plot_results(results):
     ax2.legend()
     
     plt.tight_layout()
-    plt.savefig('benchmark_plot.png')
-    print("Bar plot saved to benchmark_plot.png")
+    plt.savefig('results/benchmark_plot.png')
+    print("Bar plot saved to results/benchmark_plot.png")
 
 def plot_boxplots(results):
     # Unique scenarios (lat, loss)
@@ -234,12 +237,10 @@ def plot_boxplots(results):
         ("Level 5\n(ML-KEM-1024 / P-521)", "mlkem1024", "P-521", "p521_mlkem1024")
     ]
     
-    fig, axes = plt.subplots(len(scenarios), 2, figsize=(16, 8 * len(scenarios)))
-    if len(scenarios) == 1:
-        axes = np.expand_dims(axes, axis=0)
-        
-    for i, (lat, loss) in enumerate(scenarios):
+    for lat, loss in scenarios:
         lat_results = {r['algorithm']: r for r in results if r['latency_ms'] == lat and r.get('packet_loss_percent', 0) == loss}
+        
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
         
         y_locs = np.arange(len(groups))
         
@@ -286,13 +287,14 @@ def plot_boxplots(results):
             ax.legend([bp1["boxes"][0], bp2["boxes"][0], bp3["boxes"][0]], 
                       ['Kyber/ML-KEM', 'ECDHE', 'Hybrid'], loc='best')
 
-        draw_grouped_boxplot(axes[i][0], k_hs, e_hs, h_hs, f"Handshake Time @ {lat}ms / {loss}% Loss")
-        draw_grouped_boxplot(axes[i][1], k_tx, e_tx, h_tx, f"Transfer Time (10MB) @ {lat}ms / {loss}% Loss")
+        draw_grouped_boxplot(ax1, k_hs, e_hs, h_hs, f"Handshake Time @ {lat}ms / {loss}% Loss")
+        draw_grouped_boxplot(ax2, k_tx, e_tx, h_tx, f"Transfer Time (10MB) @ {lat}ms / {loss}% Loss")
 
-
-    plt.tight_layout()
-    plt.savefig('benchmark_boxplot.png')
-    print("Boxplot saved to benchmark_boxplot.png")
+        plt.tight_layout()
+        filename = f"results/boxplot_lat{lat}ms_loss{loss}.png"
+        plt.savefig(filename)
+        plt.close(fig)
+        print(f"Boxplot saved to {filename}")
 
 if __name__ == "__main__":
     main()
