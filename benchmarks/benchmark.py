@@ -12,10 +12,25 @@ ALGORITHMS = [
     "mlkem768", "P-384", "p384_mlkem768",
     "mlkem1024", "P-521", "p521_mlkem1024"
 ]
+
+ALGO_DETAILS = {
+    "mlkem512": {"pk": 800, "ct": 768, "label": "ML-KEM-512"},
+    "P-256": {"pk": 65, "ct": 65, "label": "P-256"},
+    "p256_mlkem512": {"pk": 865, "ct": 833, "label": "P-256 + ML-KEM-512"},
+    
+    "mlkem768": {"pk": 1184, "ct": 1088, "label": "ML-KEM-768"},
+    "P-384": {"pk": 97, "ct": 97, "label": "P-384"},
+    "p384_mlkem768": {"pk": 1281, "ct": 1185, "label": "P-384 + ML-KEM-768"},
+    
+    "mlkem1024": {"pk": 1568, "ct": 1568, "label": "ML-KEM-1024"},
+    "P-521": {"pk": 133, "ct": 133, "label": "P-521"},
+    "p521_mlkem1024": {"pk": 1701, "ct": 1701, "label": "P-521 + ML-KEM-1024"},
+}
 # Hybrid: p256_mlkem512, p384_mlkem768, p521_mlkem1024
 
-LATENCIES = [0, 50] # ms
-ITERATIONS = 5
+LATENCIES = [0, 50,100] # ms
+LOSS_RATES = [0,5,20] # percent
+ITERATIONS = 20
 
 def run_command(cmd, shell=True):
     # print(f"Debug: {cmd}")
@@ -46,12 +61,18 @@ def setup_server_file():
     # Cleanup local
     os.remove(filename)
 
-def set_latency(latency_ms):
+def set_network(latency_ms, loss_percent):
     # Clean up first
     run_command("docker compose exec -T client tc qdisc del dev eth0 root")
     
+    args = []
     if latency_ms > 0:
-        cmd = f"docker compose exec -T client tc qdisc add dev eth0 root netem delay {latency_ms}ms"
+        args.append(f"delay {latency_ms}ms")
+    if loss_percent > 0:
+        args.append(f"loss {loss_percent}%")
+    
+    if args:
+        cmd = f"docker compose exec -T client tc qdisc add dev eth0 root netem {' '.join(args)}"
         run_command(cmd)
 
 def benchmark_handshake(algo, latency):
@@ -89,43 +110,47 @@ def main():
     final_results = []
     
     for lat in LATENCIES:
-        print(f"\n--- Latency: {lat}ms ---")
-        set_latency(lat)
-        for algo in ALGORITHMS:
-            print(f"Benchmarking {algo} ", end="", flush=True)
-            
-            hs_times = []
-            tx_times = []
-            
-            # Use a few warmups
-            benchmark_handshake(algo, lat)
-            
-            for _ in range(ITERATIONS):
-                hs = benchmark_handshake(algo, lat)
-                if hs is not None:
-                    hs_times.append(hs)
+        for loss in LOSS_RATES:
+            print(f"\n--- Latency: {lat}ms, Loss: {loss}% ---")
+            set_network(lat, loss)
+            for algo in ALGORITHMS:
+                details = ALGO_DETAILS.get(algo, {"pk": "?", "ct": "?", "label": algo})
+                print(f"Benchmarking {algo} [PK: {details['pk']}B, CT: {details['ct']}B] ", end="", flush=True)
                 
-                tx = benchmark_transfer(algo, lat)
-                if tx is not None:
-                    tx_times.append(tx)
-                print(".", end="", flush=True)
+                hs_times = []
+                tx_times = []
                 
-            avg_hs = sum(hs_times)/len(hs_times) if hs_times else 0
-            avg_tx = sum(tx_times)/len(tx_times) if tx_times else 0
-            
-            print(f" Done. HS: {avg_hs:.4f}s, TX: {avg_tx:.4f}s")
-            
-            final_results.append({
-                "latency_ms": lat,
-                "algorithm": algo,
-                "handshake_time_s": avg_hs,
-                "transfer_time_s": avg_tx,
-                "handshake_raw": hs_times,
-                "transfer_raw": tx_times
-            })
+                # Use a few warmups
+                benchmark_handshake(algo, lat)
+                
+                for _ in range(ITERATIONS):
+                    hs = benchmark_handshake(algo, lat)
+                    if hs is not None:
+                        hs_times.append(hs)
+                    
+                    tx = benchmark_transfer(algo, lat)
+                    if tx is not None:
+                        tx_times.append(tx)
+                    print(".", end="", flush=True)
+                    
+                avg_hs = sum(hs_times)/len(hs_times) if hs_times else 0
+                avg_tx = sum(tx_times)/len(tx_times) if tx_times else 0
+                
+                print(f" Done. HS: {avg_hs:.4f}s, TX: {avg_tx:.4f}s")
+                
+                final_results.append({
+                    "latency_ms": lat,
+                    "packet_loss_percent": loss,
+                    "algorithm": algo,
+                    "handshake_time_s": avg_hs,
+                    "transfer_time_s": avg_tx,
+                    "key_details": ALGO_DETAILS.get(algo, {}),
+                    "handshake_raw": hs_times,
+                    "transfer_raw": tx_times
+                })
             
     # Cleanup
-    set_latency(0)
+    set_network(0, 0)
     
     # Save Results
     json_path = "results.json"
@@ -141,26 +166,27 @@ def main():
         print(f"Plotting failed: {e}")
 
 def plot_results(results):
-    latencies = sorted(list(set(r['latency_ms'] for r in results)))
+    # Unique scenarios (lat, loss)
+    scenarios = sorted(list(set((r['latency_ms'], r.get('packet_loss_percent', 0)) for r in results)))
     algos = sorted(list(set(r['algorithm'] for r in results)))
     
     # Setup data structures
-    # We want grouped bars. Outer group: Latency. Inner group: Algo.
+    # We want grouped bars. Outer group: Scenario. Inner group: Algo.
     
-    x = np.arange(len(latencies))  # the label locations
+    x = np.arange(len(scenarios))  # the label locations
     width = 0.35  # the width of the bars
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(max(12, len(scenarios)*2), 6))
     
     # Prepare data for easy plotting
-    # {algo: [val_at_lat0, val_at_lat1]}
+    # {algo: [val_at_scen0, val_at_scen1]}
     hs_data = {algo: [] for algo in algos}
     tx_data = {algo: [] for algo in algos}
     
     for algo in algos:
-        for lat in latencies:
+        for lat, loss in scenarios:
             # Find matching result
-            res = next((r for r in results if r['latency_ms'] == lat and r['algorithm'] == algo), None)
+            res = next((r for r in results if r['latency_ms'] == lat and r.get('packet_loss_percent', 0) == loss and r['algorithm'] == algo), None)
             hs_data[algo].append(res['handshake_time_s'] if res else 0)
             tx_data[algo].append(res['transfer_time_s'] if res else 0)
     
@@ -174,9 +200,9 @@ def plot_results(results):
         multiplier += 1
 
     ax1.set_ylabel('Time (s)')
-    ax1.set_title('Handshake Time by Latency')
+    ax1.set_title('Handshake Time by Network Condition')
     ax1.set_xticks(x + bar_width * (len(algos) - 1) / 2)
-    ax1.set_xticklabels([f"{l}ms" for l in latencies])
+    ax1.set_xticklabels([f"{lat}ms, {loss}% Loss" for lat, loss in scenarios], rotation=45, ha='right')
     ax1.legend()
     # ax1.set_yscale('log') # Optional: log scale if differences are huge
 
@@ -188,9 +214,9 @@ def plot_results(results):
         multiplier += 1
 
     ax2.set_ylabel('Time (s)')
-    ax2.set_title('Transfer Time (10MB) by Latency')
+    ax2.set_title('Transfer Time (10MB) by Network Condition')
     ax2.set_xticks(x + bar_width * (len(algos) - 1) / 2)
-    ax2.set_xticklabels([f"{l}ms" for l in latencies])
+    ax2.set_xticklabels([f"{lat}ms, {loss}% Loss" for lat, loss in scenarios], rotation=45, ha='right')
     ax2.legend()
     
     plt.tight_layout()
@@ -198,7 +224,8 @@ def plot_results(results):
     print("Bar plot saved to benchmark_plot.png")
 
 def plot_boxplots(results):
-    latencies = sorted(list(set(r['latency_ms'] for r in results)))
+    # Unique scenarios (lat, loss)
+    scenarios = sorted(list(set((r['latency_ms'], r.get('packet_loss_percent', 0)) for r in results)))
     
     # Define groups: (Label, Kyber_Algo, ECDHE_Algo, Hybrid_Algo)
     groups = [
@@ -207,12 +234,12 @@ def plot_boxplots(results):
         ("Level 5\n(ML-KEM-1024 / P-521)", "mlkem1024", "P-521", "p521_mlkem1024")
     ]
     
-    fig, axes = plt.subplots(len(latencies), 2, figsize=(16, 8 * len(latencies)))
-    if len(latencies) == 1:
+    fig, axes = plt.subplots(len(scenarios), 2, figsize=(16, 8 * len(scenarios)))
+    if len(scenarios) == 1:
         axes = np.expand_dims(axes, axis=0)
         
-    for i, lat in enumerate(latencies):
-        lat_results = {r['algorithm']: r for r in results if r['latency_ms'] == lat}
+    for i, (lat, loss) in enumerate(scenarios):
+        lat_results = {r['algorithm']: r for r in results if r['latency_ms'] == lat and r.get('packet_loss_percent', 0) == loss}
         
         y_locs = np.arange(len(groups))
         
@@ -259,8 +286,9 @@ def plot_boxplots(results):
             ax.legend([bp1["boxes"][0], bp2["boxes"][0], bp3["boxes"][0]], 
                       ['Kyber/ML-KEM', 'ECDHE', 'Hybrid'], loc='best')
 
-        draw_grouped_boxplot(axes[i][0], k_hs, e_hs, h_hs, f"Handshake Time @ {lat}ms Latency")
-        draw_grouped_boxplot(axes[i][1], k_tx, e_tx, h_tx, f"Transfer Time (10MB) @ {lat}ms Latency")
+        draw_grouped_boxplot(axes[i][0], k_hs, e_hs, h_hs, f"Handshake Time @ {lat}ms / {loss}% Loss")
+        draw_grouped_boxplot(axes[i][1], k_tx, e_tx, h_tx, f"Transfer Time (10MB) @ {lat}ms / {loss}% Loss")
+
 
     plt.tight_layout()
     plt.savefig('benchmark_boxplot.png')
