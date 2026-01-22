@@ -6,8 +6,6 @@
 - Einführung des 1-RTT Handshake (Verbindung steht nach nur einer Runde)
     - PQC-Schlüssel sind groß -> effizienter Handshake umso wichtiger, um Latenz zu kompensieren
 
-
-
 ## Vergleich Handshake TLS 1.2 vs TLS 1.3
 
 ![image](/tls/images/tls-1.2-1.3-handshake.webp)
