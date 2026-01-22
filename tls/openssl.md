@@ -13,7 +13,6 @@
 2. libcrypto:
     - Allgemeine Kryptografie-Bibliothek
     - Stellt die mathematischen Algorithmen bereit (AES, SHA, RSA, ECDH)
-    - Kryptografie-Bibliothek, stellt verschieden Algorithmen bereit (AES, SHA, RSA, ECDH)
 
 ## Funktionalität:
 - Command Line Interface

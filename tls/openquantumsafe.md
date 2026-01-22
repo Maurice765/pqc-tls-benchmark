@@ -11,12 +11,12 @@
 
 1. liboqs:
     - C-Bibliothek, welche die mathematischen Algorithmen implementiert
+    - NIST-Finalisten (FIPS Standards) als auch Round-4-Kandidaten
     - Bietet einheitliche Schnittstelle für alle Algorithmen
     - Algorithmen:
         - KEMs (Key Encapsulation): Für den Schlüsselaustausch (z.B. ML-KEM/Kyber, FrodoKEM, Bikel)
         - Signaturen: Für Authentifizierung (z.B. ML-DSA/Dilithium, Falcon/FN-DSA)
         - sowie hybride Verfahren
-    - Implementiert Neutral sowohl NIST-Finalisten (FIPS Standards) als auch Round-4-Kandidaten
     - Language Wrapper verfügbar für z.B. Python, Java, Go, ...
 
 2. Integrationen:
@@ -32,7 +32,7 @@
 ## Relevanz für unser Projekt:
 
 - Basis für Benchmark: openquantumsafe/nginx Docker Image für Performance Messungen
-- zeigt das TLS 1.3 bereits heute PQC fähig ist (via Key Share Extension)
+- zeigt das TLS 1.3 bereits heute PQC fähig ist
 
 
 ## Ressources
